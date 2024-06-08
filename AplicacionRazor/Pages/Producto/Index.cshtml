@@ -1,0 +1,98 @@
+﻿@page
+@model AplicacionRazor.Pages.Cursos.IndexModel
+
+@{
+    ViewData["Title"] = "Lista Productos";
+}
+
+@if (Model.Mensaje != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        @Model.Mensaje
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="text-center mb-4">
+    Mira nuestros cursos profesionales en: <a href="https://render2web.com/cursos" target="_blank">www.render2web.com/cursos</a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2 class="text-info">Lista de Productos</h2>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a asp-page="Crear" class="btn btn-primary">Crear Nuevo Producto</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        @if (Model.Cursos.ToList().Count > 0)
+        {
+            <table class="table table-striped table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Nombre del producto
+                        </th>
+                        <th>
+                            Descripción
+                        </th>
+                        <th>
+                            Stock
+                        </th>
+                        <th>
+                            Precio
+                        </th>
+                        <th>
+                            Fecha de creación
+                        </th>
+                        <th>
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Cursos)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.NombreProducto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Stock)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Precio)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.FechaCreacion)
+                            </td>
+                            <td>
+                                <a asp-route-id="@item.Id" asp-page="Editar" class="btn btn-success btn-sm">Editar</a>
+                                <button asp-page-handler="Borrar" asp-route-id="@item.Id" onclick="return confirm('¿Está seguro de querer borrar?')" class="btn btn-danger btn-sm">Borrar</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No hay cursos disponibles</p>
+        }
+    </div>
+</div>
